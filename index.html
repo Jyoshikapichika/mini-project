@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mess Menu Feedback System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial;
+        }
+
+        /* BODY */
+
+        body {
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.45)),
+
+                url("https://images.unsplash.com/photo-1498654896293-37aacf113fd9?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+
+        /* HEADER */
+
+        header {
+
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+
+            padding: 20px;
+
+            text-align: center;
+
+            font-size: 38px;
+
+            font-weight: bold;
+
+            color: white;
+
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+        }
+
+        /* LOGIN */
+
+        .container {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 50px;
+
+            padding: 60px;
+
+            flex-wrap: wrap;
+
+        }
+
+        /* GLASS EFFECT */
+
+        .card,
+        .form-box,
+        .data-box {
+
+            background: rgba(255, 255, 255, 0.18);
+
+            backdrop-filter: blur(12px);
+
+            border: 1px solid rgba(255, 255, 255, 0.3);
+
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+
+        }
+
+        /* CARD */
+
+        .card {
+
+            padding: 35px;
+
+            width: 350px;
+
+            border-radius: 25px;
+
+            transition: 0.4s;
+
+        }
+
+        .card:hover {
+
+            transform: translateY(-10px);
+
+        }
+
+        .student {
+
+            border-top: 10px solid #3498db;
+
+        }
+
+        .admin {
+
+            border-top: 10px solid #e74c3c;
+
+        }
+
+        .card h2 {
+
+            text-align: center;
+
+            margin-bottom: 20px;
+
+            font-size: 30px;
+
+            color: white;
+
+        }
+
+        .card input {
+
+            width: 100%;
+
+            padding: 15px;
+
+            margin: 12px 0;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.8);
+
+            font-size: 17px;
+
+        }
+
+        .card button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: white;
+
+            cursor: pointer;
+
+        }
+
+        .student button {
+
+            background: #3498db;
+
+        }
+
+        .admin button {
+
+            background: #e74c3c;
+
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+
+            display: none;
+
+            padding: 40px;
+
+        }
+
+        .dashboard h1 {
+
+            text-align: center;
+
+            font-size: 42px;
+
+            margin-bottom: 40px;
+
+            color: white;
+
+            text-shadow: 2px 2px 5px black;
+
+        }
+
+        .dashboard-buttons {
+
+            display: grid;
+
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+            gap: 30px;
+
+        }
+
+        .dashboard-buttons button {
+
+            padding: 25px;
+
+            border: none;
+
+            border-radius: 20px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: white;
+
+            cursor: pointer;
+
+            transition: 0.4s;
+
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+        }
+
+        .dashboard-buttons button:hover {
+
+            transform: translateY(-8px) scale(1.05);
+
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+        }
+
+        .btn1 {
+
+            background: linear-gradient(to right, #11998e, #38ef7d);
+
+        }
+
+        .btn2 {
+
+            background: linear-gradient(to right, #36d1dc, #5b86e5);
+
+        }
+
+        .btn3 {
+
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+
+        }
+
+        .btn4 {
+
+            background: linear-gradient(to right, #8e2de2, #4a00e0);
+
+        }
+
+        /* PAGES */
+
+        .page {
+
+            display: none;
+
+            padding: 40px;
+
+        }
+
+        .page h1 {
+
+            text-align: center;
+
+            font-size: 40px;
+
+            margin-bottom: 30px;
+
+            color: white;
+
+            text-shadow: 2px 2px 5px black;
+
+        }
+
+        /* TABLE */
+
+        table {
+
+            width: 90%;
+
+            margin: auto;
+
+            border-collapse: collapse;
+
+            background: rgba(255, 255, 255, 0.92);
+
+            backdrop-filter: blur(10px);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+        }
+
+        th {
+
+            background: #ff416c;
+
+            color: white;
+
+            padding: 22px;
+
+            font-size: 24px;
+
+            border: 3px solid white;
+
+        }
+
+        td {
+
+            padding: 22px;
+
+            text-align: center;
+
+            font-size: 20px;
+
+            border: 2px solid #ddd;
+
+            font-weight: bold;
+
+        }
+
+        tr:nth-child(even) {
+
+            background: #f9f9f9;
+
+        }
+
+        tr:hover {
+
+            background: #ffe0ec;
+
+            transition: 0.3s;
+
+        }
+
+        /* FORM */
+
+        .form-box {
+
+            width: 600px;
+
+            margin: auto;
+
+            padding: 35px;
+
+            border-radius: 25px;
+
+        }
+
+        .form-box input,
+        .form-box textarea,
+        .form-box select {
+
+            width: 100%;
+
+            padding: 15px;
+
+            margin: 15px 0;
+
+            font-size: 18px;
+
+            border-radius: 12px;
+
+            border: 2px solid #ddd;
+
+        }
+
+        .form-box button {
+
+            width: 100%;
+
+            padding: 15px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: linear-gradient(to right, #00b09b, #96c93d);
+
+            color: white;
+
+            cursor: pointer;
+
+        }
+
+        /* DATA BOX */
+
+        .data-box {
+
+            width: 85%;
+
+            margin: auto;
+
+            max-height: 500px;
+
+            overflow-y: auto;
+
+            padding: 25px;
+
+            border-radius: 25px;
+
+        }
+
+        .data-item {
+
+            padding: 18px;
+
+            margin: 12px 0;
+
+            border-radius: 15px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #2c3e50;
+
+        }
+
+        .feedback-item {
+
+            background: #d6eaf8;
+
+        }
+
+        .complaint-item {
+
+            background: #fadbd8;
+
+        }
+
+        .rating-item {
+
+            background: #d5f5d5;
+
+        }
+
+        /* ================= VIEW MENU PAGE ================= */
+
+        #menuPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= FEEDBACK PAGE ================= */
+
+        #feedbackPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= COMPLAINT PAGE ================= */
+
+        #complaintPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= RATING PAGE ================= */
+
+        #ratingPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1552566626-52f8b828add9?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= UPDATE MENU PAGE ================= */
+
+        #updateMenuPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= VIEW FEEDBACK PAGE ================= */
+
+        #feedbackDataPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= VIEW COMPLAINT PAGE ================= */
+
+        #complaintDataPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1467003909585-2f8a72700288?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+
+        /* ================= REPORT PAGE ================= */
+
+        #ratingDataPage {
+
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)),
+
+                url("https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        🍽 Mess Menu Feedback System 🍽
+    </header>
+
+    <!-- LOGIN -->
+
+    <div class="container" id="loginSection">
+
+        <div class="card student">
+
+            <h2>🎓 Student Login</h2>
+
+            <input type="text" id="studentUser" placeholder="Enter Username">
+
+            <input type="password" id="studentPass" placeholder="Enter Password">
+
+            <button onclick="studentLogin()">Login</button>
+
+        </div>
+
+        <div class="card admin">
+
+            <h2>👨‍💼 Admin Login</h2>
+
+            <input type="text" id="adminUser" placeholder="Admin ID">
+
+            <input type="password" id="adminPass" placeholder="Password">
+
+            <button onclick="adminLogin()">Login</button>
+
+        </div>
+
+    </div>
+
+    <!-- STUDENT DASHBOARD -->
+
+    <div class="dashboard" id="studentDashboard">
+
+        <h1>🎓 Student Dashboard</h1>
+
+        <div class="dashboard-buttons">
+
+            <button class="btn1" onclick="openPage('menuPage')">
+                🍽 View Mess Menu
+            </button>
+
+            <button class="btn2" onclick="openPage('feedbackPage')">
+                📝 Give Feedback
+            </button>
+
+            <button class="btn3" onclick="openPage('complaintPage')">
+                ⚠ Complaint
+            </button>
+
+            <button class="btn4" onclick="openPage('ratingPage')">
+                ⭐ Rate Food
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+
+    <div class="dashboard" id="adminDashboard">
+
+        <h1>👨‍💼 Admin Dashboard</h1>
+
+        <div class="dashboard-buttons">
+
+            <button class="btn1" onclick="openPage('updateMenuPage')">
+                🍽 Update Menu
+            </button>
+
+            <button class="btn2" onclick="showFeedbacks()">
+                📝 View Feedback
+            </button>
+
+            <button class="btn3" onclick="showComplaints()">
+                ⚠ View Complaints
+            </button>
+
+            <button class="btn4" onclick="showRatings()">
+                📊 Reports
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- MENU PAGE -->
+
+    <div class="page" id="menuPage">
+
+        <h1>🍽 TODAY MESS MENU 🍽</h1>
+
+        <table>
+
+            <tr>
+                <th>Meal Time</th>
+                <th>Food Items</th>
+            </tr>
+
+            <tr>
+                <td>🌞 Breakfast</td>
+                <td id="breakfastText">Idli & Sambar</td>
+            </tr>
+
+            <tr>
+                <td>🍛 Lunch</td>
+                <td id="lunchText">Rice & Curry</td>
+            </tr>
+
+            <tr>
+                <td>☕ Snacks</td>
+                <td id="snacksText">Samosa & Tea</td>
+            </tr>
+
+            <tr>
+                <td>🌙 Dinner</td>
+                <td id="dinnerText">Chapati & Paneer Curry</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- UPDATE MENU -->
+
+    <div class="page" id="updateMenuPage">
+
+        <h1>🍽 Update Menu</h1>
+
+        <div class="form-box">
+
+            <input type="text" id="breakfastInput" placeholder="Breakfast Menu">
+
+            <input type="text" id="lunchInput" placeholder="Lunch Menu">
+
+            <input type="text" id="snacksInput" placeholder="Snacks Menu">
+
+            <input type="text" id="dinnerInput" placeholder="Dinner Menu">
+
+            <button onclick="updateMenu()">
+                Update Menu
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- FEEDBACK -->
+
+    <div class="page" id="feedbackPage">
+
+        <h1>📝 Feedback Form</h1>
+
+        <div class="form-box">
+
+            <input type="text" id="feedbackName" placeholder="Enter Name">
+
+            <select id="feedbackText">
+
+                <option>😊 Good</option>
+                <option>😐 Average</option>
+                <option>😞 Bad</option>
+
+            </select>
+
+            <button onclick="submitFeedback()">
+                Submit Feedback
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- COMPLAINT -->
+
+    <div class="page" id="complaintPage">
+
+        <h1>⚠ Complaint Form</h1>
+
+        <div class="form-box">
+
+            <input type="text" id="complaintName" placeholder="Enter Name">
+
+            <textarea rows="5" id="complaintText" placeholder="Enter Complaint"></textarea>
+
+            <button onclick="submitComplaint()">
+                Submit Complaint
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RATING -->
+
+    <div class="page" id="ratingPage">
+
+        <h1>⭐ Rate Food</h1>
+
+        <div class="form-box">
+
+            <select id="ratingValue">
+
+                <option>⭐ 1 Star</option>
+                <option>⭐⭐ 2 Star</option>
+                <option>⭐⭐⭐ 3 Star</option>
+                <option>⭐⭐⭐⭐ 4 Star</option>
+                <option>⭐⭐⭐⭐⭐ 5 Star</option>
+
+            </select>
+
+            <button onclick="submitRating()">
+                Submit Rating
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- FEEDBACK DATA -->
+
+    <div class="page" id="feedbackDataPage">
+
+        <h1>📝 Student Feedbacks</h1>
+
+        <div class="data-box" id="feedbackData"></div>
+
+    </div>
+
+    <!-- COMPLAINT DATA -->
+
+    <div class="page" id="complaintDataPage">
+
+        <h1>⚠ Student Complaints</h1>
+
+        <div class="data-box" id="complaintData"></div>
+
+    </div>
+
+    <!-- RATINGS DATA -->
+
+    <div class="page" id="ratingDataPage">
+
+        <h1>📊 Student Ratings</h1>
+
+        <div class="data-box" id="ratingData"></div>
+
+    </div>
+    <script>
+
+        /* LOAD MENU */
+
+        async function loadMenu() {
+
+            let response = await fetch('/get_menu');
+
+            let data = await response.json();
+
+            document.getElementById("breakfastText").innerHTML =
+                data.breakfast;
+
+            document.getElementById("lunchText").innerHTML =
+                data.lunch;
+
+            document.getElementById("snacksText").innerHTML =
+                data.snacks;
+
+            document.getElementById("dinnerText").innerHTML =
+                data.dinner;
+
+        }
+
+        /* LOGIN */
+
+        function studentLogin() {
+
+            let user = document.getElementById("studentUser").value;
+            let pass = document.getElementById("studentPass").value;
+
+            if (user != "" && pass != "") {
+
+                document.getElementById("loginSection").style.display = "none";
+
+                document.getElementById("studentDashboard").style.display = "block";
+
+            }
+            else {
+
+                alert("Enter Username & Password");
+
+            }
+
+        }
+
+        function adminLogin() {
+
+            let user = document.getElementById("adminUser").value;
+            let pass = document.getElementById("adminPass").value;
+
+            if (user == "admin" && pass == "1234") {
+
+                document.getElementById("loginSection").style.display = "none";
+
+                document.getElementById("adminDashboard").style.display = "block";
+
+            }
+            else {
+
+                alert("Invalid Admin ID or Password");
+
+            }
+
+        }
+
+        /* OPEN PAGE */
+
+        function openPage(pageId) {
+
+            let pages = document.querySelectorAll(".page");
+
+            pages.forEach(function (page) {
+
+                page.style.display = "none";
+
+            });
+
+            document.getElementById(pageId).style.display = "block";
+
+        }
+
+        /* UPDATE MENU */
+
+        async function updateMenu() {
+
+            let breakfast =
+                document.getElementById("breakfastInput").value;
+
+            let lunch =
+                document.getElementById("lunchInput").value;
+
+            let snacks =
+                document.getElementById("snacksInput").value;
+
+            let dinner =
+                document.getElementById("dinnerInput").value;
+
+            await fetch('/update_menu', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    breakfast,
+                    lunch,
+                    snacks,
+                    dinner
+
+                })
+
+            });
+
+            loadMenu();
+
+            alert("Menu Updated Successfully");
+
+        }
+
+        /* FEEDBACK */
+
+        async function submitFeedback() {
+
+            let name =
+                document.getElementById("feedbackName").value;
+
+            let feedback =
+                document.getElementById("feedbackText").value;
+
+            await fetch('/submit_feedback', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    name,
+                    feedback
+
+                })
+
+            });
+
+            alert("Feedback Submitted Successfully");
+
+        }
+
+        /* COMPLAINT */
+
+        async function submitComplaint() {
+
+            let name =
+                document.getElementById("complaintName").value;
+
+            let complaint =
+                document.getElementById("complaintText").value;
+
+            await fetch('/submit_complaint', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    name,
+                    complaint
+
+                })
+
+            });
+
+            alert("Complaint Submitted Successfully");
+
+        }
+
+        /* RATING */
+
+        async function submitRating() {
+
+            let rating =
+                document.getElementById("ratingValue").value;
+
+            await fetch('/submit_rating', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    rating
+
+                })
+
+            });
+
+            alert("Rating Submitted Successfully");
+
+        }
+
+        /* SHOW FEEDBACKS */
+
+        async function showFeedbacks() {
+
+            openPage("feedbackDataPage");
+
+            let response =
+                await fetch('/feedbacks');
+
+            let data =
+                await response.json();
+
+            let box =
+                document.getElementById("feedbackData");
+
+            box.innerHTML = "";
+
+            data.forEach(function (item) {
+
+                box.innerHTML += `
+
+<div class="data-item feedback-item">
+
+⭐ ${item.name} : ${item.feedback}
+
+</div>
+
+`;
+
+            });
+
+        }
+
+        /* SHOW COMPLAINTS */
+
+        async function showComplaints() {
+
+            openPage("complaintDataPage");
+
+            let response =
+                await fetch('/complaints');
+
+            let data =
+                await response.json();
+
+            let box =
+                document.getElementById("complaintData");
+
+            box.innerHTML = "";
+
+            data.forEach(function (item) {
+
+                box.innerHTML += `
+
+<div class="data-item complaint-item">
+
+⚠ ${item.name} : ${item.complaint}
+
+</div>
+
+`;
+
+            });
+
+        }
+
+        /* SHOW RATINGS */
+
+        async function showRatings() {
+
+            openPage("ratingDataPage");
+
+            let response =
+                await fetch('/ratings');
+
+            let data =
+                await response.json();
+
+            let box =
+                document.getElementById("ratingData");
+
+            box.innerHTML = "";
+
+            data.forEach(function (item) {
+
+                box.innerHTML += `
+
+<div class="data-item rating-item">
+
+⭐ ${item}
+
+</div>
+
+`;
+
+            });
+
+        }
+
+        /* PAGE LOAD */
+
+        window.onload = loadMenu;
+
+    </script>
+
+</body>
+
+</html>
